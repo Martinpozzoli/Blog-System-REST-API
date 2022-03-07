@@ -1,11 +1,16 @@
 package com.blog.system.dto;
 
+import java.util.Set;
+
+import com.blog.system.entities.Comment;
+
 public class PostDTO {
 
 	private Long id;
 	private String title;
 	private String description;
-	private String content;
+	private String content;	
+	private Set<Comment> comments;
 	public Long getId() {
 		return id;
 	}
@@ -30,15 +35,22 @@ public class PostDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public PostDTO() {
-		super();
+	public Set<Comment> getComments() {
+		return comments;
 	}
-	public PostDTO(Long id, String title, String description, String content) {
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+	public PostDTO(Long id, String title, String description, String content, Set<Comment> comments) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.content = content;
+		this.comments = comments;
+	}
+	public PostDTO() {
+		super();
 	}
 	
 	
