@@ -1,8 +1,11 @@
 package com.blog.system.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,18 +42,21 @@ public class PostController {
 		return ResponseEntity.ok(postService.getPostById(id));
 	}
 
-	@PostMapping
-	public ResponseEntity<PostDTO> savePost(@RequestBody PostDTO postDTO) {
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping	//@Valid indica que los valores deben cumplir con los requisitos detallados en DTO
+	public ResponseEntity<PostDTO> savePost(@Valid @RequestBody PostDTO postDTO) {
 
 		return new ResponseEntity<>(postService.createPost(postDTO), HttpStatus.CREATED);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable(name = "id") Long id) {
+	public ResponseEntity<PostDTO> updatePost(@Valid @RequestBody PostDTO postDTO, @PathVariable(name = "id") Long id) {
 		PostDTO responsePost = postService.updatePost(postDTO, id);
 		return new ResponseEntity<>(responsePost, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletePost(@PathVariable(name = "id") Long id) {
 		postService.deletePost(id);

@@ -1,10 +1,22 @@
 package com.blog.system.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class CommentDTO {
 	
 	private long id;
+	
+	@NotEmpty(message = "Name must not be empty")
 	private String name;
+	
+	@NotEmpty(message = "Email must not be empty")
+	@Email(message = "Must be a properly formatted email address")
 	private String email;
+	
+	@NotEmpty(message = "Body must not be empty")
+	@Size(min = 10, message = "Body must be at least 10 characters long")
 	private String body;
 	public long getId() {
 		return id;
